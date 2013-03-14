@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.gatein.portal</groupId>
+    <artifactId>exo.portal.portlet</artifactId>
+    <version>3.6.0.MO1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.gatein.portal.portlet</groupId>
+  <artifactId>redirect-admin-ui</artifactId>
+
+  <packaging>war</packaging>
+
+  <name>GateIn Redirect Admin UI Portlet</name>
+
+  <properties>
+    <version.gatein.component>3.6.0.MO1-SNAPSHOT</version.gatein.component>
+    <version.gatein-api-java>1.0.0.Alpha01</version.gatein-api-java>
+    <org.exoplatform.kernel.version>2.4.1-GA</org.exoplatform.kernel.version>
+
+    <version.portlet-bridge>3.2.0.Beta1</version.portlet-bridge>
+
+    <version.richfaces>4.3.0-SNAPSHOT</version.richfaces>
+    <qualifier.richfaces>jbas71</qualifier.richfaces>
+    <version.richfaces.bootstrap>4.3.0-SNAPSHOT</version.richfaces.bootstrap>
+
+    <version.jsf2.api>2.1</version.jsf2.api>
+    <version.jsf2.impl>2.1.5</version.jsf2.impl>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.gatein.api</groupId>
+      <artifactId>gatein-api</artifactId>
+      <version>${version.gatein-api-java}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gatein.common</groupId>
+      <artifactId>common-common</artifactId>
+      <version>2.0.4-GA</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.exoplatform.kernel</groupId>
+      <artifactId>exo.kernel.container</artifactId>
+      <version>${org.exoplatform.kernel.version}</version>
+      <scope>provided</scope>
+    </dependency>
+      <dependency>
+         <groupId>org.gatein.portal</groupId>
+         <artifactId>exo.portal.component.resources</artifactId>
+         <version>${version.gatein.component}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.gatein.portal</groupId>
+         <artifactId>exo.portal.component.web.controller</artifactId>
+         <version>${version.gatein.component}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.gatein.portal</groupId>
+         <artifactId>exo.portal.component.web.resources</artifactId>
+         <version>${version.gatein.component}</version>
+         <scope>provided</scope>
+      </dependency>  
+
+      <dependency>
+         <groupId>javax.xml.bind</groupId>
+         <artifactId>jaxb-api</artifactId>
+         <version>2.2</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>javax.faces</groupId>
+         <artifactId>jsf-api</artifactId>
+         <version>${version.jsf2.api}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.sun.faces</groupId>
+         <artifactId>jsf-impl</artifactId>
+         <version>${version.jsf2.impl}</version>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>org.jboss.portletbridge</groupId>
+         <artifactId>portletbridge-api</artifactId>
+         <version>${version.portlet-bridge}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.portletbridge</groupId>
+         <artifactId>portletbridge-impl</artifactId>
+         <version>${version.portlet-bridge}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jboss.portletbridge</groupId>
+        <artifactId>richfaces4-depchain</artifactId>
+        <version>${version.portlet-bridge}</version>
+        <type>pom</type>
+      </dependency>
+
+      <dependency>
+         <groupId>org.richfaces.ui</groupId>
+         <artifactId>richfaces-components-ui</artifactId>
+         <version>${version.richfaces}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.richfaces.core</groupId>
+         <artifactId>richfaces-core-impl</artifactId>
+         <version>${version.richfaces}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.richfaces.sandbox.ui.bootstrap</groupId>
+         <artifactId>bootstrap-ui</artifactId>
+         <version>${version.richfaces.bootstrap}</version>
+      </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>redirect-admin</finalName>
+  </build>
+</project>

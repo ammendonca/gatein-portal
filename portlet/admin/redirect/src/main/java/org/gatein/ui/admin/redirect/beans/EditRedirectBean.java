@@ -87,7 +87,6 @@ public class EditRedirectBean implements Serializable {
     }
 
     public void addRedirect(String site) {
-        System.out.println("[EditRedirectBean] '" + getName() + "' addRedirect()");
         this.siteName = site;
         this.pr = new PortalRedirect();
         this.pr.setConditions(new ArrayList<RedirectCondition>());
@@ -126,7 +125,6 @@ public class EditRedirectBean implements Serializable {
      * @param name the name of the redirect to be enabled/disabled
      */
     public void toggleEnabled(String site, String name) {
-        System.out.println("[EditRedirectBean] '" + getName() + "' toggleEnabled(" + site + ", " + name + ")");
         try {
             // FIXME: Use webui Util.getUIPortal();
             if (ds == null) {
@@ -136,8 +134,6 @@ public class EditRedirectBean implements Serializable {
             cfg = ds.getPortalConfig(site);
             for (PortalRedirect pr : cfg.getPortalRedirects()) {
                 if (pr.getName().equals(name)) {
-                    System.out.println("[EditRedirectBean] '" + getName() + "' toggleEnabled(" + site + ", " + name
-                            + ") >> Enabled was '" + pr.isEnabled() + "'");
                     pr.setEnabled(!pr.isEnabled());
                     ds.save(cfg);
                     return;
@@ -146,17 +142,13 @@ public class EditRedirectBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("[EditRedirectBean] '" + getName() + "' toggleEnabled(" + site + ", " + name + ") >> Not Found!");
     }
 
     public void toggleEnabled() {
-        System.out.println("[EditRedirectBean] '" + getName() + "' toggleEnabled()");
         toggleEnabled(siteName, redirectName);
     }
 
     public String deleteRedirect(String site, String name) {
-        System.out.println("[EditRedirectBean] '" + getName() + "' deleteRedirect(" + site + ", " + name + ")");
-
         try {
             // FIXME: Use webui Util.getUIPortal();
             if (ds == null) {
@@ -170,8 +162,6 @@ public class EditRedirectBean implements Serializable {
             for (int i = 0; i < redirects.size(); i++) {
                 if (redirects.get(i).getName().equals(name)) {
                     index = i;
-                    System.out.println("[EditRedirectBean] '" + getName() + "' deleteRedirect() // Found redirect at index "
-                            + index);
                     break;
                 }
             }
@@ -180,9 +170,8 @@ public class EditRedirectBean implements Serializable {
                 redirects.remove(index);
                 cfg.setPortalRedirects(redirects);
                 ds.save(cfg);
-                System.out.println("[EditRedirectBean] '" + getName() + "' deleteRedirect() // Redirect deleted.");
             } else {
-                System.out.println("[EditRedirectBean] '" + getName() + "' deleteRedirect() // Redirect not found or deleted.");
+                // redirect was not found or deleted...
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -197,8 +186,6 @@ public class EditRedirectBean implements Serializable {
      * @return
      */
     public String saveRedirect() {
-        System.out.println("[EditRedirectBean] '" + getName() + "' saveRedirect()");
-
         try {
             // FIXME: Use webui Util.getUIPortal();
             if (ds == null) {
@@ -220,8 +207,6 @@ public class EditRedirectBean implements Serializable {
                 for (int i = 0; i < redirects.size(); i++) {
                     if (redirects.get(i).getName().equals(originalName)) {
                         index = i;
-                        System.out.println("[EditRedirectBean] '" + getName() + "' saveRedirect() // Found redirect at index "
-                                + index);
                         break;
                     }
                 }
@@ -235,9 +220,8 @@ public class EditRedirectBean implements Serializable {
                 cfg.setPortalRedirects(redirects);
                 ds.save(cfg);
                 isNewRedirect = false;
-                System.out.println("[EditRedirectBean] '" + getName() + "' saveRedirect() // Redirect updated and saved.");
             } else {
-                System.out.println("[EditRedirectBean] '" + getName() + "' saveRedirect() // Redirect not found or saved.");
+                // redirect was not found or saved...
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -252,7 +236,6 @@ public class EditRedirectBean implements Serializable {
      */
     public void rollbackRedirect() {
         isEdit = false;
-        System.out.println("[EditRedirectBean] '" + getName() + "' rollbackRedirect()");
     }
 
     // ----- REDIRECT ENABLED, NAME & SITE -----
@@ -264,7 +247,6 @@ public class EditRedirectBean implements Serializable {
      * @param enabled the value to set the enabled property
      */
     public void setEnabled(boolean enabled) {
-        System.out.println("[EditRedirectBean] '" + getName() + "' setEnabled(" + enabled + ")");
         pr.setEnabled(enabled);
     }
 
@@ -274,17 +256,14 @@ public class EditRedirectBean implements Serializable {
      * @return a boolean indicating the redirect enabled property
      */
     public boolean getEnabled() {
-        System.out.println("[EditRedirectBean] '" + getName() + "' isEnabled() = " + enabled);
         return pr != null ? pr.isEnabled() : false;
     }
 
     public String getRedirectSite() {
-        System.out.println("[EditRedirectBean] getRedirectSite()");
         return this.pr != null ? this.pr.getRedirectSite() : null;
     }
 
     public void setRedirectSite(String redirectSite) {
-        System.out.println("[EditRedirectBean] setRedirectSite(" + redirectSite + ")");
         this.pr.setRedirectSite(redirectSite);
     }
 
@@ -342,12 +321,10 @@ public class EditRedirectBean implements Serializable {
     }
 
     public ArrayList<String> getContains(String condition) {
-        System.out.println("[EditRedirectBean] '" + editedCondition.getName() + "' getContains(" + condition + ")");
         return editedCondition.getUserAgentConditions().getContains();
     }
 
     public void addCondition() {
-        System.out.println("[EditRedirectBean] addCondition()");
         this.editedCondition = createNewCondition();
         isNewCondition = true;
     }
@@ -359,7 +336,6 @@ public class EditRedirectBean implements Serializable {
      */
     public void removeCondition(Integer index) {
         RedirectCondition rc = pr.getConditions().remove((int) index);
-        System.out.println("[EditRedirectBean] '" + getName() + "' removeCondition(" + index + ") = '" + rc + "'");
     }
 
     /**
@@ -384,7 +360,6 @@ public class EditRedirectBean implements Serializable {
      * Adds a new "CONTAINS" entry to the edited condition.
      */
     public void addContains() {
-        System.out.println("[EditRedirectBean] '" + editedCondition.getName() + "' addContains()");
         editedCondition.getUserAgentConditions().getContains().add("");
         conditionsChanged = true;
     }
@@ -396,8 +371,6 @@ public class EditRedirectBean implements Serializable {
      */
     public void removeContains(Integer index) {
         String rc = editedCondition.getUserAgentConditions().getContains().remove((int) index);
-        System.out.println("[EditRedirectBean] '" + editedCondition.getName() + "' removeContains(" + index + ") = '" + rc
-                + "'");
         conditionsChanged = true;
     }
 
@@ -405,7 +378,6 @@ public class EditRedirectBean implements Serializable {
      * Adds a new "DOES NOT CONTAIN" entry to the edited condition.
      */
     public void addDoesNotContain() {
-        System.out.println("[EditRedirectBean] '" + editedCondition.getName() + "' addContains()");
         editedCondition.getUserAgentConditions().getDoesNotContain().add("");
         conditionsChanged = true;
     }
@@ -417,13 +389,10 @@ public class EditRedirectBean implements Serializable {
      */
     public void removeDoesNotContain(Integer index) {
         String rc = editedCondition.getUserAgentConditions().getDoesNotContain().remove((int) index);
-        System.out.println("[EditRedirectBean] '" + editedCondition.getName() + "' removeContains(" + index + ") = '" + rc
-                + "'");
         conditionsChanged = true;
     }
 
     public boolean getConditionsChanged() {
-        System.out.println("[EditRedirectBean] '" + getName() + "' getConditionsChanged()");
         return conditionsChanged;
     }
 
@@ -433,10 +402,7 @@ public class EditRedirectBean implements Serializable {
      * @return
      */
     public String saveCondition() {
-        System.out.println("[EditRedirectBean] '" + getName() + "' saveCondition()");
         if (isNewCondition) {
-            System.out.println("[EditRedirectBean] '" + getName() + "' saveCondition() : Adding New Condition '"
-                    + editedCondition.getName() + "'");
             this.pr.getConditions().add(editedCondition);
             isNewCondition = false;
             conditionsChanged = false;
@@ -449,7 +415,6 @@ public class EditRedirectBean implements Serializable {
      * TODO: Try to clone the entire condition for backup.
      */
     public void rollbackCondition() {
-        System.out.println("[EditRedirectBean] '" + getName() + "' rollbackCondition()");
         if (!isNewCondition) {
             this.editedCondition.getUserAgentConditions().setContains(backupContains);
             this.editedCondition.getUserAgentConditions().setDoesNotContain(backupDoesNotContain);
@@ -463,7 +428,6 @@ public class EditRedirectBean implements Serializable {
      * Adds a new Device Property to the edited condition.
      */
     public void addProperty() {
-        System.out.println("[EditRedirectBean] addProperty()");
         if (editedCondition.getDeviceProperties() == null) {
             editedCondition.setDeviceProperties(new ArrayList<DevicePropertyCondition>());
         }
@@ -478,8 +442,6 @@ public class EditRedirectBean implements Serializable {
      */
     public void removeProperty(Integer index) {
         DevicePropertyCondition rc = editedCondition.getDeviceProperties().remove((int) index);
-        System.out.println("[EditRedirectBean] '" + editedCondition.getName() + "' removeProperty(" + index + ") = '" + rc
-                + "'");
         conditionsChanged = true;
     }
 
@@ -491,7 +453,6 @@ public class EditRedirectBean implements Serializable {
      *         and eq for equals)
      */
     public String getPropertyOperator(int index) {
-        System.out.println("[EditRedirectBean] getPropertyOperator(" + index + ")");
         DevicePropertyCondition dp = editedCondition.getDeviceProperties().get(index);
         if (dp.getMatches() != null && !dp.getMatches().trim().isEmpty()) {
             return "mt";
@@ -510,12 +471,10 @@ public class EditRedirectBean implements Serializable {
     // ----- MAPPINGS -----
 
     public void addNodeMapping() {
-        System.out.println("[EditRedirectBean] addNodeMapping()");
         this.pr.getMappings().getMappings().add(0, new NodeMap());
     }
 
     public void removeNodeMapping(int index) {
-        System.out.println("[EditRedirectBean] removeNodeMapping(" + index + ")");
         ArrayList<NodeMap> mappings = this.pr.getMappings().getMappings();
         mappings.remove(index);
         this.pr.getMappings().setMappings(mappings);
@@ -571,12 +530,10 @@ public class EditRedirectBean implements Serializable {
      * @return
      */
     public List<String> getCurrentNodeNames() {
-        System.out.println("[EditRedirectBean] getCurrentNodeNames returning " + Arrays.toString(originNodeNames.toArray()));
         return currentNodeNames;
     }
 
     public void setCurrentNodeNames(boolean isOrigin) {
-        System.out.println("[EditRedirectBean] setCurrentNodeNames(" + isOrigin + ")");
         if (isOrigin) {
             this.currentNodeNames = originNodeNames;
             this.nodesSiteName = siteName;
@@ -589,7 +546,6 @@ public class EditRedirectBean implements Serializable {
     // --- Utilities ----------------------------------------------------------
 
     public void load(String site, String redirect) {
-        System.out.println("[EditRedirectBean] load(" + site + ", " + redirect + ")");
         isNewRedirect = false;
 
         this.siteName = site;
@@ -611,7 +567,6 @@ public class EditRedirectBean implements Serializable {
                     this.mappings = pr.getMappings();
                     this.originNodeNames = loadOriginNodes(site);
                     this.redirectNodeNames = loadRedirectNodes();
-                    System.out.println("[EditRedirectBean] loaded successfully");
                     isEdit = true;
                     return;
                 }
@@ -620,13 +575,11 @@ public class EditRedirectBean implements Serializable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("[EditRedirectBean] did not load");
     }
 
     // TODO: move this to a different bean
     public List<String> loadOriginNodes(String siteName) {
         try {
-            System.out.println("[api] Loading Origin Nodes for '" + siteName + "'");
             ArrayList<String> nodes = new ArrayList<String>();
             if (siteName != null) {
                 Node n = PortalRequest.getInstance().getPortal().getNavigation(new SiteId(siteName))
@@ -636,7 +589,6 @@ public class EditRedirectBean implements Serializable {
                 }
             }
 
-            System.out.println("[api] getNodes returning " + Arrays.toString(nodes.toArray()));
             return nodes;
         } catch (Exception e) {
             e.printStackTrace();
@@ -646,7 +598,6 @@ public class EditRedirectBean implements Serializable {
 
     public List<String> loadRedirectNodes() {
         try {
-            System.out.println("[api] Loading Redirect Nodes for '" + redirectSite + "'");
             ArrayList<String> nodes = new ArrayList<String>();
             if (redirectSite != null) {
                 Node n = PortalRequest.getInstance().getPortal().getNavigation(new SiteId(redirectSite))
@@ -656,7 +607,6 @@ public class EditRedirectBean implements Serializable {
                 }
             }
 
-            System.out.println("[api] loadRedirectNodes() returning " + Arrays.toString(nodes.toArray()));
             this.redirectNodeNames = nodes;
             return nodes;
         } catch (Exception e) {

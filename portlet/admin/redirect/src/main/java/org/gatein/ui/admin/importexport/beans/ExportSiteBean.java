@@ -1,3 +1,25 @@
+/*
+ * JBoss, Home of Professional Open Source.
+ * Copyright 2013, Red Hat, Inc., and individual contributors
+ * as indicated by the @author tags. See the copyright.txt file in the
+ * distribution for a full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
 package org.gatein.ui.admin.importexport.beans;
 
 import java.io.OutputStream;
@@ -39,30 +61,24 @@ public class ExportSiteBean implements Serializable {
 
         String filename = new StringBuilder(type).append("_").append(safeName).append("_").append(getTimestamp()).append(".zip").toString();
 
-        try {
-            ResourceResponse response = (ResourceResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        ResourceResponse response = (ResourceResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
-            response.reset();
-            response.setContentType("application/zip");
-            response.setProperty("Content-disposition", "attachment; filename=\"" + filename + "\"");
+        response.reset();
+        response.setContentType("application/zip");
+        response.setProperty("Content-disposition", "attachment; filename=\"" + filename + "\"");
 
-            ManagementController controller = (ManagementController) PortalContainer.getComponent(ManagementController.class);
-            PathAddress address = PathAddress.pathAddress("mop", type + "sites", name);
+        ManagementController controller = (ManagementController) PortalContainer.getComponent(ManagementController.class);
+        PathAddress address = PathAddress.pathAddress("mop", type + "sites", name);
 
-            ManagedRequest request = ManagedRequest.Factory.create(OperationNames.EXPORT_RESOURCE, address, ContentType.ZIP);
-            ManagedResponse expResponse = controller.execute(request);
-            if (expResponse.getOutcome().isSuccess()) {
-                expResponse.writeResult(out, true);
-            } else {
-                throw new Exception(expResponse.getOutcome().getFailureDescription());
-            }
-
-            fctx.responseComplete();
-
-        } catch (Exception e) {
-            System.err.println("\nFailure : " + e.toString() + "\n");
-            e.printStackTrace();
+        ManagedRequest request = ManagedRequest.Factory.create(OperationNames.EXPORT_RESOURCE, address, ContentType.ZIP);
+        ManagedResponse expResponse = controller.execute(request);
+        if (expResponse.getOutcome().isSuccess()) {
+            expResponse.writeResult(out, true);
+        } else {
+            throw new Exception(expResponse.getOutcome().getFailureDescription());
         }
+
+        fctx.responseComplete();
     }
 
     private String getTimestamp() {
